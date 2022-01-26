@@ -167,4 +167,72 @@ public class EmployeeRepositoryTests {
                 //then- verify the output
                 assertThat(savedEmployee).isNotNull();
             }
+
+
+    //JUnit test for custom query using jpql with named params
+    @Test
+    public void givenFirstNameAndLastName_whenFindByJPQLNamedParam_thenReturnEmployeeObject()
+    {
+        //given- precondition or setup
+        Employee employee=Employee.builder()
+                .firstName("Ajit")
+                .lastName("Kumar")
+                .email("ajit@mail.com")
+                .build();
+        employeeRepository.save(employee);
+
+        String firstName="Ajit";
+        String lastName="Kumar";
+
+        //when- action or the behaviour we're testing
+        Employee savedEmployee = employeeRepository.findByJPQLNamedParam(firstName, lastName);
+
+        //then- verify the output
+        assertThat(savedEmployee).isNotNull();
+    }
+
+    //JUnit test for custom query using native sql with index param
+    @Test
+    public void givenFirstNameAndLastName_whenFindByNativeSqlParam_thenReturnEmployeeObject()
+    {
+        //given- precondition or setup
+        Employee employee=Employee.builder()
+                .firstName("Ajit")
+                .lastName("Kumar")
+                .email("ajit@mail.com")
+                .build();
+        employeeRepository.save(employee);
+
+        String firstName="Ajit";
+        String lastName="Kumar";
+
+        //when- action or the behaviour we're testing
+        Employee savedEmployee = employeeRepository.findByNativeSQL(firstName, lastName);
+
+        //then- verify the output
+        assertThat(savedEmployee).isNotNull();
+    }
+
+
+    //JUnit test for custom query using native sql with named param
+    @Test
+    public void givenFirstNameAndLastName_whenFindByNativeSqlNamedParam_thenReturnEmployeeObject()
+    {
+        //given- precondition or setup
+        Employee employee=Employee.builder()
+                .firstName("Ajit")
+                .lastName("Kumar")
+                .email("ajit@mail.com")
+                .build();
+        employeeRepository.save(employee);
+
+        String firstName="Ajit";
+        String lastName="Kumar";
+
+        //when- action or the behaviour we're testing
+        Employee savedEmployee = employeeRepository.findByNativeSQLNamedParam(firstName, lastName);
+
+        //then- verify the output
+        assertThat(savedEmployee).isNotNull();
+    }
 }
