@@ -134,7 +134,7 @@ public class EmployeeServiceTests {
             assertThat(savedEmployee).isNotNull();
         }
 
-    //JUnit test for
+    //JUnit test for update employee
         @Test
         public void givenEmployeeObject_whenUpdateEmployee_thenReturnUpdatedEmployee()
         {
@@ -149,5 +149,21 @@ public class EmployeeServiceTests {
             //then- verify the output
             assertThat(updateEmployee.getEmail()).isEqualTo("tarun@mail.com");
             assertThat(updateEmployee.getFirstName()).isEqualTo("tarun");
+        }
+
+
+    //JUnit test for delete employee
+        @Test
+        public void givenEmployeeId_whenDeleteEmployee_thenNothing()
+        {
+            long employeeId=1L;
+            //given- precondition or setup
+            BDDMockito.willDoNothing().given(employeeRepository).deleteById(employeeId);
+
+            //when- action or the behaviour we're testing
+            employeeServiceImpl.deleteEmployee(employeeId);
+
+            //then- verify the output
+            Mockito.verify(employeeRepository,Mockito.times(1)).deleteById(employeeId);
         }
 }
