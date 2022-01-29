@@ -6,8 +6,6 @@ import com.springboot.testing.repository.EmployeeRepository;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
-import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,18 +14,22 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class EmployeeControllerIntegrationTests {
+@Testcontainers
+public class EmployeeControllerIntegrationTest {
+
+    @Container
+    private MySQLContainer mySQLContainer=new MySQLContainer("mysql:latest");
 
     @Autowired
     private MockMvc mockMvc;
@@ -45,6 +47,12 @@ public class EmployeeControllerIntegrationTests {
 
     @Test
     public void givenEmployeeObject_whenCreateEmployee_thenReturnSavedEmployee() throws Exception {
+
+        System.out.println(mySQLContainer.getUsername());
+        System.out.println(mySQLContainer.getPassword());
+        System.out.println(mySQLContainer.getDatabaseName());
+        System.out.println(mySQLContainer.getJdbcUrl());
+
         //given- precondition or setup
         Employee employee = Employee.builder()
                 .firstName("Tarun")
